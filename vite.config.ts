@@ -8,7 +8,7 @@ import react from '@vitejs/plugin-react-swc'
 // const __dirname = path.dirname(__filename)
 
 export default defineConfig({
-  base: 'https://prokaiteam.github.io/ProkaiCare/',
+  base: '/',
   plugins: [react()],
   server: {
     host: true,
