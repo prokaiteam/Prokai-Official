@@ -1,0 +1,80 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Maven Pro', sans-serif;
+}
+
+.policyContainer {
+  z-index: 1000;
+  border-radius: 3px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  transform: translate(-50%, -50%);
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: all .2s;
+  backface-visibility: hidden;
+}
+
+.policyHeading {
+  margin-top: 70px;
+  margin-bottom: 30px;
+  font-size: 32px;
+}
+
+.policyIntro {
+  margin: 15px;
+}
+
+.welcome {
+  font-weight: 500;
+}
+
+.sectionBlock {
+  width: 80%;
+  margin: 15px 0;
+}
+
+.sn {
+  font-size: 28px;
+  padding-right: 5px;
+}
+
+.st {
+  font-size: 28px;
+}
+
+.sectionText {
+  margin: 15px;
+  line-height: 1.6;
+}
+
+.lightGreen { color: rgb(85, 189, 134); }
+.blue { color: #2998ff; }
+.orange { color: #ff7730; }
+.purple { color: #2a0073; }
+
+.closePolicy {
+  border-bottom: 1px solid black;
+  margin: 15px 0;
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+  animation-duration: .8s;
+  animation-timing-function: ease-out;
+  z-index: 1001;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
