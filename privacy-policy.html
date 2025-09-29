@@ -17,6 +17,7 @@
             color: #333;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            counter-reset: section-counter;
         }
 
         .container {
@@ -112,12 +113,12 @@
             margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 3px solid #667eea;
-            counter-increment: section;
         }
 
-        .section h2:before {
-            content: counter(section) ". ";
-            color: #667eea;
+        .section h2::before {
+             content: counter(section-counter) ". ";
+            counter-increment: section-counter;
+            color: #667eea; 
         }
 
         .section h3 {
@@ -280,6 +281,7 @@
                     <li><a href="#section8">Cookies and Tracking Technologies</a></li>
                     <li><a href="#section9">Third-Party Links and Services</a></li>
                     <li><a href="#section10">International Users</a></li>
+                    <li><a href="#section12">Google AdMob Policy Compliance</a></li>
                     <li><a href="#section11">Contact Us and Data Protection Officer</a></li>
                 </ol>
             </div>
@@ -492,6 +494,58 @@
                     </ul>
                 </div>
             </div>
+
+
+            <div class="section" id="section12">
+                <h2>Google AdMob Policy Compliance</h2>
+                <p>ProKai complies with Google AdMob program policies (which incorporate AdSense policies)
+for all advertisements displayed in the App, including rewarded ads used to promote or
+unlock access to our Basic level scripts. We use AdMob to offer users two options for
+acquiring the Basic script:<br>(1) purchase with money via Razorpay, or <br>(2) watch rewarded ads
+to unlock it for free (no cost, but ads must be viewed completely to receive the script). Pro
+and God/Advanced level scripts are available only through monetary purchase—no
+ad-based free access is provided for these tiers</p>
+
+<strong>Key Compliance Details:
+</strong>
+
+                <ul>
+                    <li><strong>Rewarded Ads for Free Access:</strong>  Rewarded ads are optional and clearly labeled.
+Users must actively choose to watch ads to unlock the Basic script, and completion is
+required for delivery. This aligns with AdMob's rewarded ad guidelines, ensuring user
+consent and no invalid traffic (e.g., no auto-plays, forced views, or misleading
+prompts).
+</li>
+<li><strong>Ad Placement and User Experience:</strong> Ads are placed non-intrusively, without
+interfering with core App functionality or misleading users (e.g., no ads disguised as
+App content). We prohibit invalid clicks, such as encouraging accidental taps or
+offering incentives beyond the script unlock.
+</li>
+<li><strong>Prohibited Practices:</strong> No ads promote illegal activities, violate intellectual property,
+or target sensitive categories. We monitor for fraud using AdMob tools and terminate
+access for violations (as per Terms Point 8 and 12).
+
+</li>
+<li><strong>User Consent and Privacy:</strong> Ads require explicit user interaction. Data from ad
+interactions is handled per our Privacy Policy and DPDPA 2023—no sharing for
+unrelated purposes. Users can manage ad preferences via device settings.
+
+
+</li>
+<li><strong>Promotion of Paid Content:</strong> Ads may promote all script levels but clearly
+distinguish free ad-based access (Basic only) from paid tiers. This complies with
+AdMob's policies on truthful advertising and no deceptive claims.
+
+
+</li>
+                </ul>
+
+                <p>For more details, refer to Google AdMob policies and AdSense policies.Violations may result
+in ad suspension or account termination. Contact prokai.team@gmail.com for queries.</p>
+
+               
+            </div>
+
 
             <div class="section" id="section11">
                 <h2>Contact Us and Data Protection Officer</h2>

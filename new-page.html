@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProKai - AI-Powered Study Revolution</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: linear-gradient(135deg, hsl(252, 51%, 8%) 0%, hsl(248, 39%, 17%) 50%, hsl(258, 51%, 51%) 100%);
+            color: hsl(0, 0%, 98%); /* --foreground */
+            line-height: 1.7;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        code {
+            font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        h1, h2, h3 {
+            font-weight: bold;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* CSS Variables */
+        :root {
+            --background: hsl(240, 10%, 3.9%);
+            --foreground: hsl(0, 0%, 98%);
+            --muted: hsl(240, 3.7%, 15.9%);
+            --muted-foreground: hsl(240, 5%, 64.9%);
+            --popover: hsl(240, 10%, 3.9%);
+            --popover-foreground: hsl(0, 0%, 98%);
+            --card: hsl(240, 10%, 3.9%);
+            --card-foreground: hsl(0, 0%, 98%);
+            --border: hsl(240, 3.7%, 15.9%);
+            --input: hsl(240, 3.7%, 15.9%);
+            --primary: hsl(207, 90%, 54%);
+            --primary-foreground: hsl(211, 100%, 99%);
+            --secondary: hsl(240, 3.7%, 15.9%);
+            --secondary-foreground: hsl(0, 0%, 98%);
+            --accent: hsl(240, 3.7%, 15.9%);
+            --accent-foreground: hsl(0, 0%, 98%);
+            --destructive: hsl(0, 62.8%, 30.6%);
+            --destructive-foreground: hsl(0, 0%, 98%);
+            --ring: hsl(240, 4.9%, 83.9%);
+            --radius: 0.5rem;
+            --primary-pink: hsl(321, 100%, 70%);
+            --secondary-pink: hsl(340, 82%, 68%);
+            --accent-red: hsl(340, 82%, 52%);
+            --deep-purple: hsl(258, 51%, 51%);
+            --light-pink: hsl(321, 100%, 85%);
+            --dark-bg: hsl(248, 39%, 17%);
+            --darker-bg: hsl(252, 51%, 8%);
+            --text-light: hsl(210, 20%, 91%);
+            --text-muted: hsl(220, 13%, 69%);
+        }
+
+        /* Utility Classes */
+        .bg-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+        }
+        .bg-glass-dark {
+            background: rgba(31, 25, 55, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        .gradient-primary {
+            background: linear-gradient(135deg, var(--primary-pink) 0%, var(--accent-red) 100%);
+        }
+        .gradient-secondary {
+            background: linear-gradient(135deg, var(--deep-purple) 0%, var(--primary-pink) 100%);
+        }
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .animate-float {
+            animation: float 20s infinite ease-in-out;
+        }
+        .animate-pulse-glow {
+            animation: pulse-glow 2s infinite;
+        }
+        .animate-slide-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.8s ease forwards;
+        }
+        .magnetic-card {
+            transition: transform 0.1s ease;
+        }
+        .magnetic-card:hover {
+            transform: perspective(1000px) rotateX(2deg) rotateY(2deg);
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Keyframes */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px) rotate(0deg);
+                opacity: 0.1;
+            }
+            25% {
+                transform: translateY(-30px) translateX(15px) rotate(90deg);
+                opacity: 0.2;
+            }
+            50% {
+                transform: translateY(0px) translateX(30px) rotate(180deg);
+                opacity: 0.15;
+            }
+            75% {
+                transform: translateY(15px) translateX(-15px) rotate(270deg);
+                opacity: 0.25;
+            }
+        }
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255, 102, 196, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(255, 102, 196, 0.6);
+            }
+        }
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            text-align: center;
+            padding: 6rem 0;
+            overflow: hidden;
+        }
+        header .bg-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.2;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIyIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC4xIi8+PGNpcmNsZSBjeD0iODAiIGN5PSI0MCIgcj0iMyIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuMSIvPjxjaXJjbGUgY3g9IjQwIiBjeT0iODAiIHI9IjIiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjEiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjEwIiByPSIxLjUiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjEiLz48Y2lyY2xlIGN4PSIxMCIgY3k9IjYwIiByPSIyLjUiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjEiLz48L3N2Zz4=');
+            background-repeat: repeat;
+            animation: float 20s infinite ease-in-out;
+        }
+        header h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: bounceIn 1.2s ease forwards;
+        }
+        header p {
+            font-size: 1.25rem;
+            animation: fadeInUp 0.8s ease 0.5s forwards;
+        }
+        .hero-text {
+            max-width: 80rem;
+            margin: 0 auto;
+            font-size: 1.25rem;
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
+            transition: transform 0.3s;
+            animation: slideUp 0.8s ease forwards;
+        }
+        .hero-text:hover {
+            transform: translateY(-0.5rem);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0;
+            text-align: center;
+            background-color: var(--dark-bg);
+        }
+        .hero h2 {
+            font-size: 3rem;
+            color: var(--primary-pink);
+            margin-bottom: 1.5rem;
+            animation: bounceIn 1.2s ease forwards;
+        }
+        .hero p {
+            max-width: 48rem;
+            margin: 0 auto 4rem;
+            color: var(--text-light);
+            animation: fadeInUp 0.8s ease 0.5s forwards;
+        }
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5rem;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: var(--radius);
+            transition: transform 0.3s;
+            animation: slideUp 0.8s ease forwards;
+        }
+        .stat-card:hover {
+            transform: scale(1.05);
+        }
+        .stat-number {
+            font-size: 3rem;
+            color: var(--primary-pink);
+            font-weight: bold;
+        }
+        .stat-label {
+            font-size: 1.125rem;
+            color: var(--text-light);
+        }
+
+        /* Problems Section */
+        .problems {
+            padding: 5rem 0;
+            background: rgba(31, 25, 55, 0.8);
+            border-radius: 1.5rem;
+            margin: 4rem 0;
+        }
+        .problems h2 {
+            font-size: 3rem;
+            color: var(--primary-pink);
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 0 1.25rem;
+        }
+        .problem-card {
+            background: linear-gradient(135deg, var(--deep-purple) 0%, var(--primary-pink) 100%);
+            padding: 2rem;
+            border-radius: 1rem;
+            transition: all 0.3s;
+            animation: slideUp 0.8s ease forwards;
+        }
+        .problem-card:hover {
+            transform: perspective(1000px) rotateX(2deg) rotateY(2deg);
+        }
+        .problem-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .problem-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .problem-desc {
+            color: var(--text-light);
+        }
+
+        /* Comparison Table */
+        .comparison {
+            padding: 5rem 0;
+            background: rgba(31, 25, 55, 0.8);
+            border-radius: 1.5rem;
+            margin: 4rem 0;
+        }
+        .comparison h2 {
+            font-size: 3rem;
+            color: var(--primary-pink);
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        th, td {
+            padding: 1rem 1.5rem;
+            text-align: left;
+        }
+        th {
+            background: linear-gradient(135deg, var(--primary-pink) 0%, var(--accent-red) 100%);
+            font-weight: bold;
+        }
+        tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.3s;
+        }
+        tr:hover {
+            background: rgba(255, 102, 196, 0.1);
+        }
+        .prokai-col {
+            background: rgba(255, 102, 196, 0.2);
+            text-align: center;
+            font-weight: bold;
+        }
+        .others-col {
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+            background: rgba(31, 25, 55, 0.8);
+            border-radius: 1.5rem;
+            margin: 4rem 0;
+        }
+        .features h2 {
+            font-size: 3rem;
+            color: var(--primary-pink);
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding: 0 2.5rem;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 0 1.25rem;
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s;
+            animation: slideUp 0.8s ease forwards;
+        }
+        .feature-card:hover {
+            transform: perspective(1000px) rotateX(2deg) rotateY(2deg);
+        }
+        .feature-icon {
+            color: var(--primary-pink);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            animation: pulse-glow 2s infinite;
+        }
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .feature-desc {
+            color: var(--text-light);
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 5rem 0;
+            background: rgba(31, 25, 55, 0.8);
+            border-radius: 1.5rem;
+            margin: 4rem 0;
+        }
+        .benefits h2 {
+            font-size: 3rem;
+            color: var(--primary-pink);
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 0 1.25rem;
+        }
+        .benefit-card {
+            background: linear-gradient(135deg, var(--deep-purple) 0%, var(--primary-pink) 100%);
+            padding: 2rem;
+            border-radius: var(--radius);
+            transition: transform 0.3s;
+            animation: slideUp 0.8s ease forwards;
+        }
+        .benefit-card:hover {
+            transform: perspective(1000px) rotateX(2deg) rotateY(2deg);
+        }
+        .benefit-icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .benefit-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .benefit-desc {
+            color: var(--text-light);
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 5rem 0;
+            background: rgba(31, 25, 55, 0.8);
+            border-radius: 1.5rem;
+            margin: 4rem 0;
+        }
+        .testimonials h2 {
+            font-size: 3rem;
+            color: var(--primary-pink);
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 0 1.25rem;
+        }
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            animation: slideUp 0.8s ease forwards;
+        }
+        .testimonial-card:hover {
+            transform: perspective(1000px) rotateX(2deg) rotateY(2deg);
+        }
+        .testimonial-avatar {
+            width: 6rem;
+            height: 6rem;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            background: linear-gradient(to right, var(--primary-pink), var(--deep-purple));
+            overflow: hidden;
+        }
+        .testimonial-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .testimonial-comment {
+            font-style: italic;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+        .testimonial-rating {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+        .star {
+            color: #fbbf24; /* yellow-400 */
+            font-size: 1.25rem;
+        }
+        .testimonial-name {
+            color: var(--primary-pink);
+            font-weight: bold;
+        }
+        .testimonial-role {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Founders Section */
+        .founders {
+            padding: 5rem 0;
+            background: rgba(31, 25, 55, 0.8);
+            border-radius: 1.5rem;
+            margin: 4rem 0;
+        }
+        .founders h2 {
+            font-size: 3rem;
+            color: var(--primary-pink);
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .founders-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 0 1.25rem;
+            justify-content: center;
+        }
+        .founder-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            animation: slideUp 0.8s ease forwards;
+        }
+        .founder-card:hover {
+            transform: perspective(1000px) rotateX(2deg) rotateY(2deg);
+        }
+        .founder-image {
+            width: 6rem;
+            height: 6rem;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            overflow: hidden;
+        }
+        .founder-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .founder-name {
+            color: var(--primary-pink);
+            font-size: 1.125rem;
+            font-weight: bold;
+        }
+        .founder-role {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+        .founder-bio {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 5rem 0;
+            background: rgba(31, 25, 55, 0.8);
+            border-radius: 1.5rem;
+            margin: 4rem 0;
+        }
+        .faq h2 {
+            font-size: 3rem;
+            color: var(--primary-pink);
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .faq-container {
+            max-width: 64rem;
+            margin: 0 auto;
+        }
+        .faq-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        .faq-question {
+            padding: 1rem 1.5rem;
+            font-size: 1.125rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .faq-question:hover {
+            background: rgba(255, 102, 196, 0.1);
+        }
+        .faq-answer {
+            padding: 1rem 1.5rem;
+            color: var(--text-light);
+            display: none; /* Hidden by default, toggle with JS if needed */
+        }
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 5rem 0;
+            text-align: center;
+        }
+        .cta-inner {
+            background: linear-gradient(135deg, var(--primary-pink) 0%, var(--accent-red) 100%);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            max-width: 64rem;
+            margin: 0 auto;
+        }
+        .cta h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        .cta p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            max-width: 32rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .cta-download {
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            max-width: 28rem;
+            margin-left: auto;
+            margin-right: auto;
+            transition: transform 0.3s;
+        }
+        .cta-download:hover {
+            transform: scale(1.05);
+        }
+        .cta-download-title {
+            font-size: 1.875rem;
+            color: var(--primary-pink);
+            margin-bottom: 0.5rem;
+        }
+        .cta-download-subtitle {
+            color: var(--primary-pink);
+        }
+        .cta-checks {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        .cta-check {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0.8;
+        }
+        .check-icon {
+            font-size: 1.25rem;
+            color: #ffffff;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 4rem 0;
+            background: rgba(31, 25, 55, 0.8);
+            border-radius: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .contact h2 {
+            font-size: 3rem;
+            color: var(--primary-pink);
+            margin-bottom: 2rem;
+        }
+        .contact p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 0.75rem;
+            padding: 1rem 1.5rem;
+            transition: all 0.3s;
+        }
+        .contact-link:hover {
+            background: rgba(255, 102, 196, 0.2);
+            transform: scale(1.05);
+        }
+        .contact-icon {
+            font-size: 1.25rem;
+            color: var(--primary-pink);
+        }
+        .contact-text {
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            background: linear-gradient(to bottom right, #111827, #0f172a, #000000);
+            margin-top: 2rem;
+            overflow: hidden;
+        }
+        footer .bg-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.1;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDYwIDAgTCAwIDAgMCA2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjEiIG9wYWNpdHk9IjAuMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==');
+        }
+        footer .container {
+            padding: 4rem 1rem;
+            position: relative;
+        }
+        .social-title {
+            color: #ffffff;
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        .social-link {
+            width: 3rem;
+            height: 3rem;
+            background: rgba(75, 85, 99, 0.7);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+        .social-link:hover {
+            color: #ffffff;
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .social-icon {
+            font-size: 1.25rem;
+        }
+        .social-link.telegram:hover { background: #3b82f6; }
+        .social-link.whatsapp:hover { background: #22c55e; }
+        .social-link.youtube:hover { background: #ef4444; }
+        .social-link.linkedin:hover { background: #2563eb; }
+        .social-link.blogger:hover { background: #f97316; }
+        .social-link.facebook:hover { background: #1d4ed8; }
+        .social-link.twitter:hover { background: #4b5563; }
+        .social-link.instagram:hover { background: var(--primary-pink); }
+        .social-link.discord:hover { background: #9333ea; }
+        .footer-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .info-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(75, 85, 99, 0.3);
+            border-radius: 0.75rem;
+            transition: all 0.3s;
+        }
+        .info-item:hover {
+            background: rgba(75, 85, 99, 0.5);
+            transform: translateY(-2px);
+        }
+        .info-icon {
+            color: var(--primary-pink);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .info-text {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            font-weight: medium;
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(75, 85, 99, 0.5);
+            padding-top: 1.5rem;
+            text-align: center;
+        }
+        .bottom-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            font-size: 0.875rem;
+        }
+        .copyright {
+            color: var(--text-muted);
+        }
+        .rating {
+            background: linear-gradient(to right, rgba(234, 179, 8, 0.2), rgba(251, 146, 60, 0.2));
+            border-radius: 9999px;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.2s;
+        }
+        .rating:hover {
+            transform: scale(1.05);
+        }
+        .rating-star {
+            color: #fbbf24;
+            font-size: 1rem;
+        }
+        .rating-text {
+            color: #fbbf24;
+            font-weight: medium;
+        }
+        .made-in {
+            color: var(--text-muted);
+        }
+
+        /* Custom Class */
+        .meem {
+            background-color: red;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            h1 {
+                font-size: 3rem;
+            }
+            h2 {
+                font-size: 2.5rem;
+            }
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            .stats {
+                gap: 2.5rem;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen relative">
+        <!-- Header -->
+        <header class="gradient-primary text-white">
+            <div class="bg-pattern"></div>
+            <div class="container relative">
+                <div class="flex flex-col items-center justify-center mb-12">
+                    <img src="https://prokaiteam.github.io/ProkaiCare/images/app_logo.png" alt="Logo" width="200">
+                    <h1>ProKai</h1>
+                    <p>AI-Powered Study Revolution</p>
+                </div>
+                <p class="hero-text">Clear Any Exam in 3 Clicks • ₹250 Only • No Books, No Courses! • No Online Teachers, No MCQ Papers • ProKai Covers All Things Like Your Personal Alibaba Genie!</p>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h2>Transform Your Exam Preparation Forever</h2>
+                <p>Join thousands of students who've revolutionized their study methods with AI-powered prompt scripts and real-time explanations.</p>
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number">10000</div>
+                        <div class="stat-label">Happy Students</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">Success Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">₹250</div>
+                        <div class="stat-label">Only</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <!-- Problems Section -->
+            <section class="problems">
+                <h2>Why Students Struggle?<br><span>ProKai Has The Only Solutions!</span></h2>
+                <div class="problems-grid">
+                    <div class="problem-card magnetic-card">
+                        <div class="problem-icon">😴</div>
+                        <h3 class="problem-title">Boring Study Methods</h3>
+                        <p class="problem-desc">Traditional books and courses are outdated, making learning feel like a chore rather than an exciting journey.</p>
+                    </div>
+                    <div class="problem-card magnetic-card">
+                        <div class="problem-icon">💸</div>
+                        <h3 class="problem-title">Expensive Coaching</h3>
+                        <p class="problem-desc">Spending thousands on coaching classes that don't guarantee success, draining both money and motivation.</p>
+                    </div>
+                    <div class="problem-card magnetic-card">
+                        <div class="problem-icon">⏰</div>
+                        <h3 class="problem-title">Time Wastage</h3>
+                        <p class="problem-desc">Hours spent on irrelevant content and complex setups that could be used for actual learning and practice.</p>
+                    </div>
+                    <div class="problem-card magnetic-card">
+                        <div class="problem-icon">🤔</div>
+                        <h3 class="problem-title">No Real-Time Help</h3>
+                        <p class="problem-desc">Stuck on problems with no immediate explanations, leading to confusion and knowledge gaps.</p>
+                    </div>
+                    <div class="problem-card magnetic-card">
+                        <div class="problem-icon">📚</div>
+                        <h3 class="problem-title">Generic Content</h3>
+                        <p class="problem-desc">One-size-fits-all approaches that don't adapt to your specific exam needs and learning style.</p>
+                    </div>
+                    <div class="problem-card magnetic-card">
+                        <div class="problem-icon">😵</div>
+                        <h3 class="problem-title">Information Overload</h3>
+                        <p class="problem-desc">Too much scattered information without clear focus on what actually matters for your exam.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Comparison Table -->
+            <section class="comparison">
+                <h2>ProKai vs All Traditional Platforms</h2>
+                <div class="overflow-x-auto">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th class="prokai-col">ProKai</th>
+                                <th class="others-col">Others (Testbook, BYJU'S, Unacademy, PW, wifi study, utkarsh...)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Setup Time</td>
+                                <td class="prokai-col">3 clicks, 2 seconds ⚡</td>
+                                <td class="others-col">Hours of registration & course selection</td>
+                            </tr>
+                            <tr>
+                                <td>Content Quality</td>
+                                <td class="prokai-col">10-year exam analysis, 100% relevant</td>
+                                <td class="others-col">Generic content, often irrelevant</td>
+                            </tr>
+                            <tr>
+                                <td>Explanations</td>
+                                <td class="prokai-col">Real-time AI, step-by-step</td>
+                                <td class="others-col">Pre-recorded, limited coverage</td>
+                            </tr>
+                            <tr>
+                                <td>Cost</td>
+                                <td class="prokai-col">₹250 one-time payment</td>
+                                <td class="others-col">₹1000+ monthly subscriptions</td>
+                            </tr>
+                            <tr>
+                                <td>Accessibility</td>
+                                <td class="prokai-col">Works with any AI + offline PDFs</td>
+                                <td class="others-col">Platform-locked, internet dependent</td>
+                            </tr>
+                            <tr>
+                                <td>Personalization</td>
+                                <td class="prokai-col">AI adapts to your learning style</td>
+                                <td class="others-col">One-size-fits-all approach</td>
+                            </tr>
+                            <tr>
+                                <td>Support</td>
+                                <td class="prokai-col">24/7 AI + prokai.team@gmail.com</td>
+                                <td class="others-col">Limited email support</td>
+                            </tr>
+                            <tr>
+                                <td>Practice Questions</td>
+                                <td class="prokai-col">Unlimited MCQs with instant explanations</td>
+                                <td class="others-col">Limited question banks, slow feedback</td>
+                            </tr>
+                            <tr>
+                                <td>Subject Coverage</td>
+                                <td class="prokai-col">All subjects according to your exam</td>
+                                <td class="others-col">Generic subjects, not exam-specific</td>
+                            </tr>
+                            <tr>
+                                <td>Study Commands</td>
+                                <td class="prokai-col">Magical ProKai commands for exam prep</td>
+                                <td class="others-col">No specialized study tools or commands</td>
+                            </tr>
+                            <tr>
+                                <td>Learning Speed</td>
+                                <td class="prokai-col">3x faster learning with AI shortcuts</td>
+                                <td class="others-col">Slow, linear progression</td>
+                            </tr>
+                            <tr>
+                                <td>Doubt Resolution</td>
+                                <td class="prokai-col">Instant AI clarification on any topic</td>
+                                <td class="others-col">Wait for next class or forum replies</td>
+                            </tr>
+                            <tr>
+                                <td>Mobile Compatibility</td>
+                                <td class="prokai-col">Works on any device with AI access</td>
+                                <td class="others-col">Heavy apps, device specific</td>
+                            </tr>
+                            <tr>
+                                <td>Study Material Updates</td>
+                                <td class="prokai-col">Real-time updates via AI knowledge</td>
+                                <td class="others-col">Outdated content, slow updates</td>
+                            </tr>
+                            <tr>
+                                <td>Exam Strategy</td>
+                                <td class="prokai-col">AI creates personalized exam strategies</td>
+                                <td class="others-col">Generic tips and tricks</td>
+                            </tr>
+                            <tr>
+                                <td>Revision Efficiency</td>
+                                <td class="prokai-col">Smart revision with AI-generated summaries</td>
+                                <td class="others-col">Manual note-making and revision</td>
+                            </tr>
+                            <tr>
+                                <td>Language support!</td>
+                                <td class="prokai-col">Choose any language at any time, Full freedom.</td>
+                                <td class="others-col">Not possible!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features">
+                <h2>How ProKai Works: The Magic Behind AI Study Scripts</h2>
+                <div class="features-grid">
+                    <div class="feature-card magnetic-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3 class="feature-title">Smart Prompt Scripts</h3>
+                        <p class="feature-desc">Think of them as magic commands - copy-paste these into ChatGPT, Gemini, or Grok, and instantly get personalized study material, MCQs, and explanations tailored to your exam.</p>
+                    </div>
+                    <div class="feature-card magnetic-card">
+                        <div class="feature-icon">📊</div>
+                        <h3 class="feature-title">Real-Time Learning</h3>
+                        <p class="feature-desc">Every wrong answer becomes a learning opportunity - AI explains step-by-step where you went wrong and how to get it right, like having a world-class teacher 24/7.</p>
+                    </div>
+                    <div class="feature-card magnetic-card">
+                        <div class="feature-icon">📖</div>
+                        <h3 class="feature-title">Data-Driven Success</h3>
+                        <p class="feature-desc">Built on 10 years of exam analysis - every script is designed to focus on high-weightage topics that actually appear in your exam.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Benefits Section -->
+            <section class="benefits">
+                <h2>Why ProKai is Your Smart Choice</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card magnetic-card">
+                        <div class="benefit-icon">💲</div>
+                        <h3 class="benefit-title">Save Money</h3>
+                        <p class="benefit-desc">Skip expensive courses and coaching classes. Just ₹250 one-time vs thousands spent on traditional methods. No hidden fees, no monthly subscriptions.</p>
+                    </div>
+                    <div class="benefit-card magnetic-card">
+                        <div class="benefit-icon">⏰</div>
+                        <h3 class="benefit-title">Save Time</h3>
+                        <p class="benefit-desc">No lengthy registrations or course browsing. 3 clicks, 2 seconds to start studying. Focus on learning, not on setup complexity.</p>
+                    </div>
+                    <div class="benefit-card magnetic-card">
+                        <div class="benefit-icon">💬</div>
+                        <h3 class="benefit-title">Personal AI Tutor</h3>
+                        <p class="benefit-desc">Get instant, personalized explanations for every question. AI understands your specific learning style and adapts accordingly.</p>
+                    </div>
+                    <div class="benefit-card magnetic-card">
+                        <div class="benefit-icon">⚡</div>
+                        <h3 class="benefit-title">Works Anywhere</h3>
+                        <p class="benefit-desc">Use ProKai with any AI platform - ChatGPT, Gemini, Claude, or even offline. No app downloads, no platform restrictions, just pure flexibility.</p>
+                    </div>
+                    <div class="benefit-card magnetic-card">
+                        <div class="benefit-icon">👥</div>
+                        <h3 class="benefit-title">Proven Success</h3>
+                        <p class="benefit-desc">Join 10,000+ successful students who cleared SSC, UPSC, CBSE, and Banking exams using ProKai's AI-powered study methodology.</p>
+                    </div>
+                    <div class="benefit-card magnetic-card">
+                        <div class="benefit-icon">📖</div>
+                        <h3 class="benefit-title">Smart Study System</h3>
+                        <p class="benefit-desc">No more random studying. Get AI-curated content that focuses only on high-weightage topics that actually appear in your specific exam.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials Section -->
+            <section class="testimonials">
+                <h2>What Students Say About ProKai</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card magnetic-card">
+                        <div class="testimonial-avatar">
+                            <img src="https://lh3.googleusercontent.com/a-/ALV-UjXNsw5wIOs0mep9PeErJ5s5g-710Clvv4ZtMKFS7cKrA5cqaZQl=s64-p-k-rw-no" alt="Pawan Kumar">
+                        </div>
+                        <p class="testimonial-comment">"ProKai helped me clear SSC CGL in just 3 months! The AI scripts are like magic - I got exactly what I needed for my exam."</p>
+                        <div class="testimonial-rating">
+                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                        </div>
+                        <p class="testimonial-name">Pawan Kumar</p>
+                        <p class="testimonial-role">SSC CGL Topper & ProKai User</p>
+                    </div>
+                    <div class="testimonial-card magnetic-card">
+                        <div class="testimonial-avatar">
+                            <img src="https://prokaiteam.github.io/ProkaiCare/images/saif.jpeg" alt="Saif">
+                        </div>
+                        <p class="testimonial-comment">"Saved ₹50,000 on coaching fees! ProKai's real-time explanations are better than any teacher I've had."</p>
+                        <div class="testimonial-rating">
+                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                        </div>
+                        <p class="testimonial-name">Saif</p>
+                        <p class="testimonial-role">UPSC Aspirant</p>
+                    </div>
+                    <div class="testimonial-card magnetic-card">
+                        <div class="testimonial-avatar">
+                            <img src="https://prokaiteam.github.io/ProkaiCare/images/akash.jpg" alt="Akash">
+                        </div>
+                        <p class="testimonial-comment">"The 3-click setup is no joke! I was studying within seconds. My CBSE scores improved by 40%!"</p>
+                        <div class="testimonial-rating">
+                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                        </div>
+                        <p class="testimonial-name">Akash</p>
+                        <p class="testimonial-role">CBSE Class 12</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Founders Section -->
+            <section class="founders">
+                <h2>Meet the Founders of ProKai</h2>
+                <div class="founders-grid">
+                    <div class="founder-card magnetic-card">
+                        <div class="founder-image">
+                            <img src="https://prokaiteam.github.io/ProkaiCare/images/meem.png" alt="Meemanshoo" class="meem">
+                        </div>
+                        <p class="founder-name">Meemanshoo</p>
+                        <p class="founder-role">Co-Founder & Visionary</p>
+                        <p class="founder-bio">Leads ProKai’s mission to make AI-driven learning accessible, effective, and personalized for every student.</p>
+                    </div>
+                    <div class="founder-card magnetic-card">
+                        <div class="founder-image">
+                            <img src="https://prokaiteam.github.io/ProkaiCare/images/ankur.jpg" alt="Raajveer">
+                        </div>
+                        <p class="founder-name">Raajveer</p>
+                        <p class="founder-role">Founder & CEO</p>
+                        <p class="founder-bio">Founder of ProKai, building AI-powered tools to make competitive exam preparation smarter and more efficient.</p>
+                    </div>
+                    <div class="founder-card magnetic-card">
+                        <div class="founder-image">
+                            <img src="https://media.licdn.com/dms/image/v2/D5603AQGveMtmhxAWog/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1709617736062?e=1756339200&v=beta&t=rLX1tlQJjrLRS1HyBnB4LLBZBYtz8mDqhuU7OX_NHuk" alt="Rituraj">
+                        </div>
+                        <p class="founder-name">Rituraj</p>
+                        <p class="founder-role">Co-Founder & Product Strategist</p>
+                        <p class="founder-bio">Shapes the ProKai experience by turning learner insights into powerful AI tools that truly help students grow.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ Section -->
+            <section class="faq">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">How does ProKai work exactly?</div>
+                        <div class="faq-answer">ProKai provides you with carefully crafted AI prompt scripts. You simply copy these prompts, paste them into any AI tool (ChatGPT, Gemini, Grok), and get instant, personalized study material tailored to your specific exam needs.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Which exams does ProKai support?</div>
+                        <div class="faq-answer">ProKai supports all major competitive exams including SSC (CGL, CHSL, MTS), UPSC (Prelims, Mains), CBSE (Class 10-12), Banking exams (SBI, IBPS), Railway exams, and many more. The scripts are designed to be adaptable to any exam format.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Is there any monthly subscription fee?</div>
+                        <div class="faq-answer">No! ProKai costs only ₹250 one-time payment. No hidden fees, no monthly subscriptions, no additional charges. Once you pay, you get lifetime access to all current and future AI prompt scripts.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Do I need any technical knowledge to use ProKai?</div>
+                        <div class="faq-answer">Absolutely not! If you can copy and paste text, you can use ProKai. The process is as simple as: 1) Copy the prompt script 2) Paste it in ChatGPT/Gemini 3) Get your personalized study material. That's it!</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="cta">
+                <div class="cta-inner">
+                    <h2>Ready to Transform Your Study Life?</h2>
+                    <p>Join 10,000+ students who've already revolutionized their exam preparation with ProKai's AI-powered study scripts.</p>
+                    <div class="cta-download">
+                        <div class="cta-download-title">Download ProKai For Free</div>
+                        <div class="cta-download-subtitle">One-time payment • Lifetime access</div>
+                    </div>
+                    <div class="cta-checks">
+                        <div class="cta-check"><span class="check-icon">✔</span> Instant Access</div>
+                        <div class="cta-check"><span class="check-icon">✔</span> No Monthly Fees</div>
+                        <div class="cta-check"><span class="check-icon">✔</span> 24/7 Support</div>
+                        <div class="cta-check"><span class="check-icon">✔</span> All Exams Covered</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section class="contact">
+                <h2>Get In Touch</h2>
+                <p>Have questions? We're here to help you succeed!</p>
+                <div class="contact-links">
+                    <a href="mailto:prokai.team@gmail.com" class="contact-link">
+                        <span class="contact-icon">✉</span>
+                        <span class="contact-text">prokai.team@gmail.com</span>
+                    </a>
+                    <div class="contact-link">
+                        <span class="contact-icon">⏰</span>
+                        <span class="contact-text">24/7 AI Support</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="bg-pattern"></div>
+            <div class="container">
+                <div class="text-center mb-8 mt-8">
+                    <h3 class="social-title">Follow Us</h3>
+                    <div class="social-links">
+                        <a href="https://t.me/ProkaiOfficial" class="social-link telegram" title="Telegram"><span class="social-icon">✈</span></a>
+                        <a href="https://whatsapp.com/channel/0029Vb5oZSqKmCPRBBis0316" class="social-link whatsapp" title="WhatsApp"><span class="social-icon">💬</span></a>
+                        <a href="https://www.youtube.com/@ProkaiOfficial" class="social-link youtube" title="YouTube"><span class="social-icon">▶</span></a>
+                        <a href="https://www.linkedin.com/in/prokaiofficial" class="social-link linkedin" title="LinkedIn"><span class="social-icon">🔗</span></a>
+                        <a href="https://prokaiofficial.blogspot.com/" class="social-link blogger" title="Blogger"><span class="social-icon">📝</span></a>
+                        <a href="https://www.facebook.com/share/16ph3vMPVX/" class="social-link facebook" title="Facebook"><span class="social-icon">f</span></a>
+                        <a href="https://x.com/ProkaiOfficial?t=kfyCnNGSq4ZiRGBBCxHjGw&s=09" class="social-link twitter" title="X"><span class="social-icon">🐦</span></a>
+                        <a href="https://www.instagram.com/prokaiofficial?igsh=MTI5cWc5NTlqaGc0Zg==" class="social-link instagram" title="Instagram"><span class="social-icon">📷</span></a>
+                        <a href="https://discord.gg/eaWn4T6R8G" class="social-link discord" title="Discord"><span class="social-icon">🎮</span></a>
+                    </div>
+                </div>
+                <div class="footer-info">
+                    <div class="info-item">
+                        <div class="info-icon">⚡</div>
+                        <div class="info-text">AI Prompt Scripts</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📖</div>
+                        <div class="info-text">All Major Exams</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">⏰</div>
+                        <div class="info-text">24/7 Support</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">💲</div>
+                        <div class="info-text">₹250 Only</div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="bottom-content">
+                        <span class="copyright">© 2024 ProKai. All rights reserved.</span>
+                        <div class="rating">
+                            <span class="rating-star">★</span>
+                            <span class="rating-text">4.9/5 Rating</span>
+                        </div>
+                        <span class="made-in">Made in India 🇮🇳-v1</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Simple JavaScript for FAQ Toggle -->
+    <script>
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', () => {
+                const parent = item.parentElement;
+                parent.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
