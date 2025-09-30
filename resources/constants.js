@@ -10,7 +10,7 @@ export const HEADING_2 = 'Smarter Exam Preparation <span class="red_dot">.</span
 export const DESCRIPTION_2 = "No more guesswork—ProKai gives you focused, exam-ready content designed to boost your performance. Study what matters, retain faster, and ace with confidence.";
 
 export const REVIEW_HEADING = 'What learners say <span class="red_dot">.</span>';
-export const REVIEW_1 = "ProKai completely changed how I study. The prompts are exactly what I need to prepare effectively. It’s like having a personal tutor!";
+export const REVIEW_1 = "ProKai changed how I study. The prompts are exactly what I need to prepare effectively—like a personal tutor!";
 export const REVIEW_PROFESSION_REDIRECT_1 = "topranker.in";
 export const REVIEW_NAME_1 = "Rituraj Agrahari";
 export const REVIEW_PROFESSION_1 = "NEET Aspirant";

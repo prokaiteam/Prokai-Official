@@ -664,14 +664,18 @@ nav {
   align-items: center;
 }
 
+
 .name h4 {
   line-height: 1.5 !important;
 }
 
 .avatar {
+  width: 80px;       /* set a fixed width */
+  height: 80px;      /* set a fixed height */
+  object-fit: cover; /* ensures the image fills the circle without distortion */
   border-radius: 50%;
-  width: 60px;
-  margin-right: 20px;
+  margin-right: 12px;
+  border: 2px solid #FF66C4FF;
 }
 
 .role {

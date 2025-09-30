@@ -1,7 +1,7 @@
 const container = document.getElementById("social-buttons-container");
 const socialPlatforms = [
   {
-    name: "WhatsApp Channel",
+    name: "WhatsApp",
     icon: "fa-whatsapp",
     hoverColor: "#25D366",
     hoverIconColor: "#ffffff",
@@ -12,7 +12,7 @@ const socialPlatforms = [
     icon: "fa-discord",
     hoverColor: "#5865F2",
     hoverIconColor: "#ffffff",
-    link: "https://discord.gg/QWs6Yw9v"
+    link: "https://discord.com/invite/eaWn4T6R8G"
   },
   {
     name: "Blogspot",
@@ -40,7 +40,7 @@ const socialPlatforms = [
     icon: "fa-brands fa-instagram",
     hoverColor: "#E4405F",
     hoverIconColor: "#ffffff",
-    link: "https://www.instagram.com/prokaiofficial?igsh=MTI5cWc5NTlqaGc0Zg==" // <-- replace with your actual handle
+    link: "https://www.instagram.com/prokaiofficial" // <-- replace with your actual handle
   },
   {
     name: "Telegram",
@@ -52,9 +52,16 @@ const socialPlatforms = [
   {
   name: "Facebook",
   icon: "fa-brands fa-facebook-f",
-  hoverColor: "#3b5998",
+  hoverColor: "#1DA1F2",
   hoverIconColor: "#ffffff",
-  link: "#" // <-- replace with your actual page if different
+  link: "https://www.facebook.com/people/ProKai-Official/61578215294386" // <-- replace with your actual page if different
+},
+  {
+  name: "X",
+  icon: "fa-brands fa-x-twitter",
+  hoverColor: "#000",
+  hoverIconColor: "#ffffff",
+  link: "https://www.linkedin.com/in/prokaiofficial" // <-- replace with your actual page if different
 }
 ];
 
