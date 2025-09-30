@@ -12,17 +12,17 @@ export const DESCRIPTION_2 = "No more guesswork—ProKai gives you focused, exam
 export const REVIEW_HEADING = 'What learners say <span class="red_dot">.</span>';
 export const REVIEW_1 = "ProKai changed how I study. The prompts are exactly what I need to prepare effectively—like a personal tutor!";
 export const REVIEW_PROFESSION_REDIRECT_1 = "topranker.in";
-export const REVIEW_NAME_1 = "Rituraj Agrahari";
+export const REVIEW_NAME_1 = "Raajveer";
 export const REVIEW_PROFESSION_1 = "NEET Aspirant";
 
 export const REVIEW_2 = "The AI-generated questions and answers feel super relevant. I’ve saved so much time with this app and my confidence has grown.";
 export const REVIEW_PROFESSION_REDIRECT_2 = "cbseguide.com";
-export const REVIEW_NAME_2 = "Shivam Shukla";
+export const REVIEW_NAME_2 = "Meemanshoo";
 export const REVIEW_PROFESSION_2 = "CBSE Student";
 
 export const REVIEW_3 = "I love how personalized ProKai feels. It helps me focus only on the topics I need. A game changer for any serious student.";
 export const REVIEW_PROFESSION_REDIRECT_3 = "aimsnext.in";
-export const REVIEW_NAME_3 = "Puta Shukla";
+export const REVIEW_NAME_3 = "Saif";
 export const REVIEW_PROFESSION_3 = "Engineering Prep";
 
 export const SUBTITLE_HEADING_1 = "AI Study Prompts";
